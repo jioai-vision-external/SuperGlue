@@ -14,7 +14,7 @@ SuperGlue is a CVPR 2020 research project done at Magic Leap. The SuperGlue netw
 SuperGlue operates as a "middle-end," performing context aggregation, matching, and filtering in a single end-to-end architecture. For more details, please see:
 
 * Full paper PDF: [SuperGlue: Learning Feature Matching with Graph Neural Networks](https://arxiv.org/abs/1911.11763).
-
+ 
 * Authors: *Paul-Edouard Sarlin, Daniel DeTone, Tomasz Malisiewicz, Andrew Rabinovich*
 
 * Website: [psarlin.com/superglue](https://psarlin.com/superglue) for videos, slides, recent updates, and more visualizations.
@@ -37,6 +37,18 @@ There are two main top-level scripts in this repo:
 
 1. `demo_superglue.py` : runs a live demo on a webcam, IP camera, image directory or movie file
 2. `match_pairs.py`: reads image pairs from files and dumps matches to disk (also runs evaluation if ground truth relative poses are provided)
+
+## Image Registration Script (`image-register.py`)
+This demo runs SuperPoint + SuperGlue feature matching on an anchor image and live image. After getting the keypoints,
+it also register the image using homography matrix.
+
+### Run the demo
+
+Run the keypoint matching + registeration using this command:
+
+```sh
+python image-register.py
+```
 
 ## Live Matching Demo Script (`demo_superglue.py`)
 This demo runs SuperPoint + SuperGlue feature matching on an anchor image and live image. You can update the anchor image by pressing the `n` key. The demo can read image streams from a USB or IP camera, a directory containing images, or a video file. You can pass all of these inputs using the `--input` flag.
