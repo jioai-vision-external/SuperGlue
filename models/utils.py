@@ -261,7 +261,8 @@ def frame2tensor(frame, device):
 
 
 def read_image(path, device, resize, rotation, resize_float):
-    image = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)
+    image_bgr = cv2.imread(str(path))
+    image = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
     if image is None:
         return None, None, None
     w, h = image.shape[1], image.shape[0]
@@ -270,8 +271,10 @@ def read_image(path, device, resize, rotation, resize_float):
 
     if resize_float:
         image = cv2.resize(image.astype('float32'), (w_new, h_new))
+        image_bgr = cv2.resize(image_bgr.astype('float32'), (w_new, h_new))
     else:
         image = cv2.resize(image, (w_new, h_new)).astype('float32')
+        image_bgr = cv2.resize(image_bgr, (w_new, h_new))
 
     if rotation != 0:
         image = np.rot90(image, k=rotation)
@@ -279,7 +282,7 @@ def read_image(path, device, resize, rotation, resize_float):
             scales = scales[::-1]
 
     inp = frame2tensor(image, device)
-    return image, inp, scales
+    return image, inp, scales, image_bgr
 
 
 # --- GEOMETRY ---
